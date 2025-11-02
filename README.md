@@ -14,7 +14,7 @@ This project analyzes employee attrition at Green Destinations using real HR dat
 - Contact
 
 ## Data Used
-- `greendestination-1-1.csv`: Contains 1470 employee records and 35 HR features such as Age, Attrition Status, YearsAtCompany, MonthlyIncome, OverTime, JobRole, etc.
+- `greendestination-1-1.csv`: Contains 1471 employee records and 35 HR features such as Age, Attrition Status, YearsAtCompany, MonthlyIncome, OverTime, JobRole, etc.
 
 ## Methodology
 1. **Data Loading & Quality Check:** Explored columns, checked for missing values (none found), verified data types.
