@@ -1,0 +1,169 @@
+@Code Used For the Project: 
+
+# 1. Import libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 2. Load the data
+df = pd.read_csv(r'c:\Users\malot\Downloads\greendestination (1) (1).csv')
+
+
+# 3. Explore initial data
+print(df.head())
+print(df.columns.tolist())
+
+# 4. Data quality check
+print(df.info())
+print(df.isnull().sum())
+print(df['Attrition'].unique())
+
+# 5. Attrition rate calculation
+num_left = df[df['Attrition'] == 'Yes'].shape[0]
+total = df.shape[0]
+attrition_rate = (num_left / total) * 100
+print("Attrition Rate (%):", attrition_rate)
+
+# 6. Compare key averages by attrition status
+means = df.groupby('Attrition')[['Age', 'YearsAtCompany', 'MonthlyIncome']].mean()
+print("Average values by Attrition status:\n", means)
+
+# 7. Boxplots for visualization
+df.boxplot(column='Age', by='Attrition')
+plt.title('Age vs Attrition')
+plt.show()
+
+df.boxplot(column='YearsAtCompany', by='Attrition')
+plt.title('Years at Company vs Attrition')
+plt.show()
+
+df.boxplot(column='MonthlyIncome', by='Attrition')
+plt.title('Monthly Income vs Attrition')
+plt.show()
+
+# 8. T-tests for statistical significance
+from scipy.stats import ttest_ind
+age_yes = df[df['Attrition']=='Yes']['Age']
+age_no = df[df['Attrition']=='No']['Age']
+t_stat_age, p_val_age = ttest_ind(age_yes, age_no)
+print("T-test Age p-value:", p_val_age)
+
+years_yes = df[df['Attrition']=='Yes']['YearsAtCompany']
+years_no = df[df['Attrition']=='No']['YearsAtCompany']
+t_stat_years, p_val_years = ttest_ind(years_yes, years_no)
+print("T-test YearsAtCompany p-value:", p_val_years)
+
+income_yes = df[df['Attrition']=='Yes']['MonthlyIncome']
+income_no = df[df['Attrition']=='No']['MonthlyIncome']
+t_stat_income, p_val_income = ttest_ind(income_yes, income_no)
+print("T-test MonthlyIncome p-value:", p_val_income)
+
+# 9. Examine effect of OverTime
+print(df.groupby('OverTime')['Attrition'].value_counts(normalize=True).rename("proportion"))
+
+@Output of the program:
+
+PS C:\Users\malot\OneDrive\Documents\Desktop\Coding\Python> python -u "c:\Users\malot\OneDrive\Documents\Desktop\Coding\Python\Project.py"
+   Age  ... YearsWithCurrManager
+0   41  ...                    5
+1   49  ...                    7
+2   37  ...                    0
+3   33  ...                    0
+4   27  ...                    2
+
+[5 rows x 35 columns]
+['Age', 'Attrition', 'BusinessTravel', 'DailyRate', 'Department', 'DistanceFromHome', 'Education', 'EducationField', 'EmployeeCount', 'EmployeeNumber', 'EnvironmentSatisfaction', 'Gender', 'HourlyRate', 'JobInvolvement', 'JobLevel', 'JobRole', 'JobSatisfaction', 'MaritalStatus', 'MonthlyIncome', 'MonthlyRate', 'NumCompaniesWorked', 'Over18', 'OverTime', 'PercentSalaryHike', 'PerformanceRating', 'RelationshipSatisfaction', 'StandardHours', 'StockOptionLevel', 'TotalWorkingYears', 'TrainingTimesLastYear', 'WorkLifeBalance', 'YearsAtCompany', 'YearsInCurrentRole', 'YearsSinceLastPromotion', 'YearsWithCurrManager']
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 1470 entries, 0 to 1469
+Data columns (total 35 columns):
+ #   Column                    Non-Null Count  Dtype 
+---  ------                    --------------  ----- 
+ 0   Age                       1470 non-null   int64 
+ 1   Attrition                 1470 non-null   object
+ 2   BusinessTravel            1470 non-null   object
+ 3   DailyRate                 1470 non-null   int64 
+ 4   Department                1470 non-null   object
+ 5   DistanceFromHome          1470 non-null   int64 
+ 6   Education                 1470 non-null   int64 
+ 7   EducationField            1470 non-null   object
+ 8   EmployeeCount             1470 non-null   int64
+ 9   EmployeeNumber            1470 non-null   int64
+ 10  EnvironmentSatisfaction   1470 non-null   int64
+ 11  Gender                    1470 non-null   object
+ 12  HourlyRate                1470 non-null   int64
+ 13  JobInvolvement            1470 non-null   int64
+ 14  JobLevel                  1470 non-null   int64
+ 15  JobRole                   1470 non-null   object
+ 16  JobSatisfaction           1470 non-null   int64
+ 17  MaritalStatus             1470 non-null   object
+ 18  MonthlyIncome             1470 non-null   int64
+ 19  MonthlyRate               1470 non-null   int64
+ 20  NumCompaniesWorked        1470 non-null   int64
+ 21  Over18                    1470 non-null   object
+ 22  OverTime                  1470 non-null   object
+ 23  PercentSalaryHike         1470 non-null   int64
+ 24  PerformanceRating         1470 non-null   int64
+ 25  RelationshipSatisfaction  1470 non-null   int64
+ 26  StandardHours             1470 non-null   int64
+ 27  StockOptionLevel          1470 non-null   int64
+ 28  TotalWorkingYears         1470 non-null   int64
+ 29  TrainingTimesLastYear     1470 non-null   int64
+ 30  WorkLifeBalance           1470 non-null   int64
+ 31  YearsAtCompany            1470 non-null   int64
+ 32  YearsInCurrentRole        1470 non-null   int64
+ 33  YearsSinceLastPromotion   1470 non-null   int64
+ 34  YearsWithCurrManager      1470 non-null   int64
+dtypes: int64(26), object(9)
+memory usage: 402.1+ KB
+None
+Age                         0
+Attrition                   0
+BusinessTravel              0
+DailyRate                   0
+Department                  0
+DistanceFromHome            0
+Education                   0
+EducationField              0
+EnvironmentSatisfaction     0
+Gender                      0
+HourlyRate                  0
+JobInvolvement              0
+JobLevel                    0
+JobRole                     0
+JobSatisfaction             0
+MaritalStatus               0
+MonthlyIncome               0
+MonthlyRate                 0
+NumCompaniesWorked          0
+Over18                      0
+OverTime                    0
+PercentSalaryHike           0
+PerformanceRating           0
+RelationshipSatisfaction    0
+StandardHours               0
+StockOptionLevel            0
+TotalWorkingYears           0
+TrainingTimesLastYear       0
+WorkLifeBalance             0
+YearsAtCompany              0
+YearsInCurrentRole          0
+YearsSinceLastPromotion     0
+YearsWithCurrManager        0
+dtype: int64
+['Yes' 'No']
+Attrition Rate (%): 16.122448979591837
+Average values by Attrition status:
+                  Age  ...  MonthlyIncome
+Attrition             ...
+No         37.561233  ...    6832.739659
+Yes        33.607595  ...    4787.092827
+
+[2 rows x 3 columns]
+T-test Age p-value: 8.356308021103587e-10
+T-test YearsAtCompany p-value: 2.3188716103863036e-07
+T-test MonthlyIncome p-value: 7.147363985353811e-10
+OverTime  Attrition
+No        No           0.895636
+          Yes          0.104364
+Yes       No           0.694712
+          Yes          0.305288
+Name: proportion, dtype: float64
